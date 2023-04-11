@@ -174,7 +174,7 @@ public class StudentDAO implements IStudentDAO {
         user.setId(resultSet.getString("id"));
         user.setName(resultSet.getString("name"));
         user.setGrade(resultSet.getFloat("grade"));
-        user.setBirthday(resultSet.getDate("birthdate"));
+        user.setBirthday(resultSet.getDate("birthday"));
         user.setAddress(resultSet.getString("address"));
         user.setNotes(resultSet.getString("note"));
         return user;

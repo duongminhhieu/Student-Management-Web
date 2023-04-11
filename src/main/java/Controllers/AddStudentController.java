@@ -3,7 +3,6 @@ package Controllers;
 
 import Dao.DAOFactory;
 import Dao.IStudentDAO;
-import Dao.implementsDAO.StudentDAO;
 import Models.Student;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -13,16 +12,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Date;
 
 @WebServlet("/add-student")
-public class addStudentController extends HttpServlet {
+public class AddStudentController extends HttpServlet {
 
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

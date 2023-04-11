@@ -12,7 +12,7 @@
             <div class="card-body">
                 <h5 class="card-title">Manage the student list</h5>
                 <p class="card-text"> Add, edit, delete, sort by name, sort by grade, find by name.</p>
-                <a href="#" class="btn btn-primary">Go</a>
+                <a href="/list-student" class="btn btn-primary">Go</a>
             </div>
         </div>
     </div>
