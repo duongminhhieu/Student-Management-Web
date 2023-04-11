@@ -1,26 +1,21 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Student {
+public class Student implements Serializable {
     private String id ;
     private String name;
     private float grade;
-    private Date birdthday;
+    private Date birthday;
     private String address;
     private String notes;
 
     // Constructor
 
+    // Constants ----------------------------------------------------------------------------------
 
-    public Student(String id, String name, float grade, Date birdthday, String address, String notes) {
-        this.id = id;
-        this.name = name;
-        this.grade = grade;
-        this.birdthday = birdthday;
-        this.address = address;
-        this.notes = notes;
-    }
+    private static final long serialVersionUID = 1L;
 
     // Getter and Setter
     public String getId() {
@@ -47,12 +42,12 @@ public class Student {
         this.grade = grade;
     }
 
-    public Date getBirdthday() {
-        return birdthday;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setBirdthday(Date birdthday) {
-        this.birdthday = birdthday;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public String getAddress() {
@@ -70,4 +65,20 @@ public class Student {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+
+    // Object overrides ---------------------------------------------------------------------------
+
+    /**
+     * The user ID is unique for each User. So this should compare User by ID only.
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof Student) && (id != null)
+                ? id.equals(((Student) other).id)
+                : (other == this);
+    }
+
+
 }

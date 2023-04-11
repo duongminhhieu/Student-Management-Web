@@ -9,7 +9,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta charset="ISO-8859-1">
-    <title>Home page</title>
+    <title>Trang web môn học</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
@@ -34,6 +34,9 @@
                     </c:when>
                     <c:when test="${func == 'addStudent'}">
                         <%@ include file="../Student/addStudent.jsp" %>
+                    </c:when>
+                    <c:when test="${func == 'listStudent'}">
+                        <%@ include file="../Student/listStudent.jsp" %>
                     </c:when>
                     <c:otherwise>
                         do this when nothing else is true

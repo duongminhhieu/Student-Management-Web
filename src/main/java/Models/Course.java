@@ -1,25 +1,14 @@
 package Models;
 
-import java.time.LocalDate;
-
 public class Course {
     private String id;
     private String name;
     private String lecture;
-    private LocalDate year;
+    private int year;
     private String notes;
 
 
     // constructor
-
-
-    public Course(String id, String name, String lecture, LocalDate year, String notes) {
-        this.id = id;
-        this.name = name;
-        this.lecture = lecture;
-        this.year = year;
-        this.notes = notes;
-    }
 
     // Getter and Setter
     public String getId() {
@@ -46,11 +35,11 @@ public class Course {
         this.lecture = lecture;
     }
 
-    public LocalDate getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(LocalDate year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
