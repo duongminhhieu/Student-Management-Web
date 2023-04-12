@@ -2,6 +2,8 @@ package Controllers;
 
 import Dao.DAOFactory;
 import Dao.IStudentDAO;
+import Models.Course;
+import Models.Student;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/list-student")
 public class ListStudentController extends HttpServlet {
@@ -23,19 +27,39 @@ public class ListStudentController extends HttpServlet {
         IStudentDAO studentDAO = javabase.getStudentDAO();
         request.setCharacterEncoding("UTF-8");
         String search = request.getParameter("search");
+        String sortSelected = request.getParameter("selected");
+
+        List<Student> lstStudent = new ArrayList<Student>();
         if(search == null){
-            request.setAttribute("lstSt", studentDAO.list());
+            lstStudent = studentDAO.list();
             request.setAttribute("title", "List Student");
         } else {
-            request.setAttribute("lstSt", studentDAO.searchList(search));
+            lstStudent = studentDAO.searchList(search);
             request.setAttribute("title", "Searching for: " + search);
         }
+
+        if(sortSelected != null){
+            lstStudent = studentDAO.sortList(lstStudent, sortSelected);
+        }
+
+        request.setAttribute("lstSt", lstStudent);
+
         request.setAttribute("func", "listStudent");
-
-
         RequestDispatcher rd = request.getRequestDispatcher("Views/Layouts/main.jsp");
         rd.forward(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        BufferedReader reader = request.getReader();
+        StringBuilder sb = new StringBuilder();
+        String data = reader.readLine();
+
+        response.setContentType("text/plain");
+        response.getWriter().write(data);
+    }
+
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

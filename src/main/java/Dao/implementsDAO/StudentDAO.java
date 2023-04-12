@@ -3,16 +3,16 @@ package Dao.implementsDAO;
 import Dao.DAOException;
 import Dao.DAOFactory;
 import Dao.IStudentDAO;
+import Models.Course;
 import Models.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.Collator;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static Dao.DAOUtil.prepareStatement;
 import static Dao.DAOUtil.toSqlDate;
@@ -201,5 +201,44 @@ public class StudentDAO implements IStudentDAO {
         }
 
         return users;
+    }
+
+    @Override
+    public List<Student> sortList(List<Student> studentList, String selected) throws DAOException {
+        Collator collator = Collator.getInstance(new Locale("vi", "VN"));
+        if (Objects.equals(selected, "1")){
+            collator.setStrength(Collator.SECONDARY); // Không phân biệt chữ hoa, chữ thường,
+            // Sắp xếp List theo thứ tự từ A-Z của key
+            Collections.sort(studentList, new Comparator<Student>() {
+                public int compare(Student o1, Student o2) {
+                    return collator.compare(o1.getName(), o2.getName());
+                }
+            });
+        } else if(Objects.equals(selected, "2")){
+            collator.setStrength(Collator.SECONDARY); // Không phân biệt chữ hoa, chữ thường,
+            // Sắp xếp List theo thứ tự từ Z - A của key
+            Collections.sort(studentList, new Comparator<Student>() {
+                public int compare(Student o1, Student o2) {
+                    return collator.compare(o2.getName(), o1.getName());
+                }
+            });
+        } else if(Objects.equals(selected, "3")){
+            // Sắp xếp List theo thứ tự từ ASC
+            Collections.sort(studentList, new Comparator<Student>() {
+                public int compare(Student o1, Student o2) {
+                    return Float.compare(o1.getGrade(), o2.getGrade());
+                }
+            });
+        } else if(Objects.equals(selected, "4")){
+            // Sắp xếp List theo thứ tự từ DESC
+            Collections.sort(studentList, new Comparator<Student>() {
+                public int compare(Student o1, Student o2) {
+                    return Float.compare(o2.getGrade(), o1.getGrade());
+                }
+            });
+        }
+
+
+        return studentList;
     }
 }

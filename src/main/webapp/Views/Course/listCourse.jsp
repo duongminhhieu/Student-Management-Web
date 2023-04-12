@@ -114,8 +114,7 @@
         if(str.indexOf("?selected") > -1){
             result = str.split("?")[0];
             result = result + '?selected=' + selected;
-        }
-        if ( str.indexOf("?search") > -1) {
+        } else if ( str.indexOf("?search") > -1) {
             if(str.indexOf("&selected") > -1){
                 result = str.split("&")[0];
                 result = result + '&selected=' + selected;
