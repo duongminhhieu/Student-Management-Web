@@ -63,6 +63,7 @@ public class AddStudentController extends HttpServlet {
         studentDAO.create(student);
         System.out.println("Student successfully created: " + student);
 
-        response.setStatus(400);
+
+        response.sendRedirect("/list-student");
     }
 }

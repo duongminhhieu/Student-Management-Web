@@ -9,7 +9,7 @@
 <form class="row g-3" method="post" action="${pageContext.request.contextPath}/edit-student">
     <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Student ID</label>
-        <input type="text" class="form-control" id="inputEmail4" name="id" value="${student.getId()}" disabled>
+        <input type="text" class="form-control" id="inputEmail4" name="id" value="${student.getId()}" readonly>
     </div>
     <div class="col-md-6">
         <label for="name" class="form-label">Name</label>
@@ -17,15 +17,15 @@
     </div>
     <div class="col-md-6">
         <label for="inputAddress" class="form-label">Grade</label>
-        <input type="number" step="0.01" class="form-control" id="inputAddress" name="grade" placeholder="Grade">
+        <input type="number" step="0.01" class="form-control" id="inputAddress" name="grade" placeholder="Grade" value="${student.getGrade()}">
     </div>
     <div class="col-md-6">
         <label for="birthday" class="form-label">Birthday</label>
-        <input type="date" class="form-control" id="birthday" name="birthday">
+        <input type="date" class="form-control" id="birthday" name="birthday" value="${student.getBirthday()}">
     </div>
     <div class="col-md-6">
         <label for="inputCity" class="form-label">Address</label>
-        <input type="text" class="form-control" id="inputCity" name="address">
+        <input type="text" class="form-control" id="inputCity" name="address" value="${student.getAddress()}">
     </div>
     <%--    <div class="col-md-4">--%>
     <%--        <label for="inputState" class="form-label">State</label>--%>
@@ -36,7 +36,7 @@
     <%--    </div>--%>
     <div class="col-md-6">
         <label for="inputZip" class="form-label">Notes</label>
-        <input type="text" class="form-control" id="inputZip" name="note">
+        <input type="text" class="form-control" id="inputZip" name="note" value="${student.getNotes()}">
     </div>
     <%--    <div class="col-12">--%>
     <%--        <div class="form-check">--%>
@@ -47,6 +47,6 @@
     <%--        </div>--%>
     <%--    </div>--%>
     <div class="col-12">
-        <button type="submit" class="btn btn-primary">Add Student</button>
+        <button type="submit" class="btn btn-primary">Update Student</button>
     </div>
 </form>

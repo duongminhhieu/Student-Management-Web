@@ -10,6 +10,10 @@
 <%@include file="../Partials/taglib.jsp" %>
 
 
+<div class="d-flex justify-content-end me-4">
+    <a type="button" class="btn btn-success mb-3" href="${pageContext.request.contextPath}/add-student">Add Student</a>
+</div>
+
 <table class="table align-middle mb-0 bg-white">
     <thead class="bg-light">
     <tr>
@@ -48,7 +52,8 @@
             </td>
             <td>
                 <div class="d-flex align-items-center">
-                    <a href="${pageContext.request.contextPath}/edit-student?idStudent=${item.getId()}" type="button" class="btn btn-primary btn-rounded">
+                    <a href="${pageContext.request.contextPath}/edit-student?idStudent=${item.getId()}" type="button"
+                       class="btn btn-primary btn-rounded">
                         Edit
                     </a>
                     <button type="button" class="ms-2 btn btn-danger btn-rounded" data-bs-toggle="modal"

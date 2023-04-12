@@ -11,6 +11,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @WebServlet("/edit-student")
 public class EditStudentController extends HttpServlet {
@@ -38,7 +41,42 @@ public class EditStudentController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Views/Layouts/main.jsp");
             rd.forward(request, response);
         }
+    }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Obtain DAOFactory.
+        DAOFactory javabase = DAOFactory.getInstance("javabase.jdbc");
 
+        // Obtain UserDAO.
+        IStudentDAO studentDAO = javabase.getStudentDAO();
+        request.setCharacterEncoding("UTF-8");
+
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        float grade = Float.parseFloat(request.getParameter("grade"));
+        String dateString = request.getParameter("birthday");
+        String address = request.getParameter("address");
+        String notes = request.getParameter("note");
+
+        System.out.println(id +  name + grade + dateString + address + notes);
+        Student student = new Student();
+        student.setId(id);
+        student.setName(name);
+        student.setGrade(grade);
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date chosenDate;
+        try {
+            chosenDate = inputFormat.parse(dateString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        student.setBirthday(chosenDate);
+        student.setAddress(address);
+        student.setNotes(notes);
+
+        studentDAO.update(student);
+        System.out.println("Student successfully updated: " + student);
+        response.sendRedirect("/list-student");
     }
 }
