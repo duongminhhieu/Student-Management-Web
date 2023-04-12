@@ -13,11 +13,33 @@
 <div class="d-flex justify-content-end me-4">
     <a type="button" class="btn btn-success mb-3" href="${pageContext.request.contextPath}/add-course">Add Course</a>
 
-    <select class="form-select mb-3 ms-2 select-box" style="width: auto" aria-label="Default select example">
-        <option selected>Sort</option>
-        <option value="1">Sort name A - Z</option>
-        <option value="2">Sort name Z - A</option>
-    </select>
+    <%
+        String value = request.getParameter("selected");
+        if(value != null){
+
+            if(value.equals("1")){
+                out.println(" <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
+                        "        <option >Sort</option>\n" +
+                        "        <option selected value=\"1\">Sort name A - Z</option>\n" +
+                        "        <option value=\"2\">Sort name Z - A</option>\n" +
+                        "    </select>");
+            } else if(value.equals("2")){
+                out.println(" <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
+                        "        <option >Sort</option>\n" +
+                        "        <option value=\"1\">Sort name A - Z</option>\n" +
+                        "        <option selected value=\"2\">Sort name Z - A</option>\n" +
+                        "    </select>");
+            }
+
+        } else{
+            out.println(" <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
+                    "        <option selected >Sort</option>\n" +
+                    "        <option value=\"1\">Sort name A - Z</option>\n" +
+                    "        <option value=\"2\">Sort name Z - A</option>\n" +
+                    "    </select>");
+        }
+
+    %>
 
     <form class="d-flex mb-3 ms-3" role="search" action="${pageContext.request.contextPath}/list-course" method="get">
         <input class="form-control me-2" type="search" name="search" placeholder="Search name ..." aria-label="Search" value="<%= request.getParameter("search") != null ? request.getParameter("search") : "" %>">

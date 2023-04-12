@@ -11,6 +11,56 @@
 <div class="d-flex justify-content-end me-4">
     <a type="button" class="btn btn-success mb-3" href="${pageContext.request.contextPath}/add-student">Add Student</a>
 
+    <%
+        String value = request.getParameter("selected");
+        if (value != null) {
+
+            if (value.equals("1")) {
+                out.println("    <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
+                        "        <option>Sort</option>\n" +
+                        "        <option selected value=\"1\">Sort name A - Z</option>\n" +
+                        "        <option value=\"2\">Sort name Z - A</option>\n" +
+                        "        <option value=\"3\">Sort grade ASC</option>\n" +
+                        "        <option value=\"4\">Sort grade DESC</option>\n" +
+                        "    </select>");
+            } else if (value.equals("2")) {
+                out.println("    <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
+                        "        <option>Sort</option>\n" +
+                        "        <option value=\"1\">Sort name A - Z</option>\n" +
+                        "        <option selected value=\"2\">Sort name Z - A</option>\n" +
+                        "        <option value=\"3\">Sort grade ASC</option>\n" +
+                        "        <option value=\"4\">Sort grade DESC</option>\n" +
+                        "    </select>");
+            } else if (value.equals("3")) {
+                out.println("    <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
+                        "        <option>Sort</option>\n" +
+                        "        <option value=\"1\">Sort name A - Z</option>\n" +
+                        "        <option value=\"2\">Sort name Z - A</option>\n" +
+                        "        <option selected value=\"3\">Sort grade ASC</option>\n" +
+                        "        <option value=\"4\">Sort grade DESC</option>\n" +
+                        "    </select>");
+            } else if (value.equals("4")) {
+                out.println("    <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
+                        "        <option>Sort</option>\n" +
+                        "        <option value=\"1\">Sort name A - Z</option>\n" +
+                        "        <option value=\"2\">Sort name Z - A</option>\n" +
+                        "        <option value=\"3\">Sort grade ASC</option>\n" +
+                        "        <option selected value=\"4\">Sort grade DESC</option>\n" +
+                        "    </select>");
+            }
+
+        } else {
+            out.println(" <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
+                    "        <option selected>Sort</option>\n" +
+                    "        <option value=\"1\">Sort name A - Z</option>\n" +
+                    "        <option value=\"2\">Sort name Z - A</option>\n" +
+                    "        <option value=\"3\">Sort grade ASC</option>\n" +
+                    "        <option value=\"4\">Sort grade DESC</option>\n" +
+                    "    </select>");
+        }
+
+    %>
+
     <select class="form-select mb-3 ms-2 select-box" style="width: auto" aria-label="Default select example">
         <option selected>Sort</option>
         <option value="1">Sort name A - Z</option>
@@ -20,7 +70,8 @@
     </select>
 
     <form class="d-flex mb-3 ms-3" role="search" action="${pageContext.request.contextPath}/list-student" method="get">
-        <input class="form-control me-2" type="search" name="search" placeholder="Search name ..." aria-label="Search" value="<%= request.getParameter("search") != null ? request.getParameter("search") : "" %>">
+        <input class="form-control me-2" type="search" name="search" placeholder="Search name ..." aria-label="Search"
+               value="<%= request.getParameter("search") != null ? request.getParameter("search") : "" %>">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 </div>
@@ -165,17 +216,17 @@
         });
     }
 
-    function stringHanding(str, selected){
+    function stringHanding(str, selected) {
         var result;
 
-        if(str.indexOf("?selected") > -1){
+        if (str.indexOf("?selected") > -1) {
             result = str.split("?")[0];
             result = result + '?selected=' + selected;
-        } else if ( str.indexOf("?search") > -1) {
-            if(str.indexOf("&selected") > -1){
+        } else if (str.indexOf("?search") > -1) {
+            if (str.indexOf("&selected") > -1) {
                 result = str.split("&")[0];
                 result = result + '&selected=' + selected;
-            }else {
+            } else {
                 result = str + '&selected=' + selected;
             }
         } else {
