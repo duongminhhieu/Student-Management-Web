@@ -38,6 +38,12 @@
                     <c:when test="${func == 'listStudent'}">
                         <%@ include file="../Student/listStudent.jsp" %>
                     </c:when>
+                    <c:when test="${func == 'editStudent'}">
+                        <%@ include file="../Student/editStudent.jsp" %>
+                    </c:when>
+                    <c:when test="${func == '404'}">
+                        <%@ include file="../404.jsp" %>
+                    </c:when>
                     <c:otherwise>
                         do this when nothing else is true
                     </c:otherwise>

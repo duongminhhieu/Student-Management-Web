@@ -128,9 +128,9 @@ public class StudentDAO implements IStudentDAO {
     }
 
     @Override
-    public void delete(Student user) throws DAOException {
+    public void delete(String id) throws DAOException {
         Object[] values = {
-                user.getId()
+                id
         };
 
         try (
@@ -141,7 +141,8 @@ public class StudentDAO implements IStudentDAO {
             if (affectedRows == 0) {
                 throw new DAOException("Deleting user failed, no rows affected.");
             } else {
-                user.setId(null);
+                //user.setId(null);
+                id = null;
             }
         } catch (SQLException e) {
             throw new DAOException(e);

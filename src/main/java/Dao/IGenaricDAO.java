@@ -18,6 +18,6 @@ public interface IGenaricDAO<T> {
     public void update(T user) throws IllegalArgumentException, DAOException;
 
     // Xóa đối tượng
-    public void delete(T user) throws DAOException;
+    public void delete(String id) throws DAOException;
 
 }

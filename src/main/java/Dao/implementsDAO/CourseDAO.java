@@ -122,9 +122,9 @@ public class CourseDAO implements ICourseDAO {
     }
 
     @Override
-    public void delete(Course course) throws DAOException {
+    public void delete(String courseID) throws DAOException {
         Object[] values = {
-                course.getId()
+                courseID
         };
 
         try (
@@ -135,7 +135,8 @@ public class CourseDAO implements ICourseDAO {
             if (affectedRows == 0) {
                 throw new DAOException("Deleting user failed, no rows affected.");
             } else {
-                course.setId(null);
+                //course.setId(null);
+                courseID = null;
             }
         } catch (SQLException e) {
             throw new DAOException(e);
