@@ -157,6 +157,7 @@
             data: data,
             success: function (result) {
                 window.location.href = "/list-student";
+
             },
             error: function (error) {
                 window.location.href = "/list-student";

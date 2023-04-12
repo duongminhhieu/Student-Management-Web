@@ -70,29 +70,8 @@
 
 
 <form name="delete-form" method="DELETE"></form>
-
+<form name="sort-form" class="sort-form" method="get"></form>
 <script>
-    <%--var totalPages = ${model.totalPage};--%>
-    <%--var currentPage = ${model.page};--%>
-    <%--var limit = 2;--%>
-    <%--$(function () {--%>
-    <%--    window.pagObj = $('#pagination').twbsPagination({--%>
-    <%--        totalPages: totalPages,--%>
-    <%--        visiblePages: 10,--%>
-    <%--        startPage: currentPage,--%>
-    <%--        onPageClick: function (event, page) {--%>
-    <%--            if (currentPage != page) {--%>
-    <%--                $('#maxPageItem').val(limit);--%>
-    <%--                $('#page').val(page);--%>
-    <%--                $('#sortName').val('title');--%>
-    <%--                $('#sortBy').val('desc');--%>
-    <%--                $('#type').val('list');--%>
-    <%--                $('#formSubmit').submit();--%>
-    <%--            }--%>
-    <%--        }--%>
-    <%--    });--%>
-    <%--});--%>
-
 
     var userID;
     document.addEventListener("DOMContentLoaded", function () {
@@ -128,6 +107,47 @@
         });
     }
 
+
+    function stringHanding(str, selected){
+        var result;
+
+        if(str.indexOf("?selected") > -1){
+            result = str.split("?")[0];
+            result = result + '?selected=' + selected;
+        }
+        if ( str.indexOf("?search") > -1) {
+            if(str.indexOf("&selected") > -1){
+                result = str.split("&")[0];
+                result = result + '&selected=' + selected;
+            }else {
+                result = str + '&selected=' + selected;
+            }
+        } else {
+            result = str + '?selected=' + selected;
+        }
+
+        return result;
+    }
+
+    function sortCourse(selected) {
+        $.ajax({
+            url: '/list-course',
+            type: 'POST',
+            contentType: 'application/json',
+            data: stringHanding(window.location.href, selected),
+            success: function (result) {
+                window.location.href = result
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+
+    var selectBox = document.querySelector('.select-box');
+    selectBox.addEventListener("change", function (evt) {
+        sortCourse(selectBox.value);
+    });
 
 </script>
 

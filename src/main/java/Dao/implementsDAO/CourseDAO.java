@@ -10,8 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.Collator;
+import java.util.*;
 
 import static Dao.DAOUtil.prepareStatement;
 import static Dao.DAOUtil.toSqlDate;
@@ -192,5 +192,29 @@ public class CourseDAO implements ICourseDAO {
         }
 
         return courses;
+    }
+
+    @Override
+    public List<Course> sortList(List<Course> courseList, String selected) throws DAOException {
+        Collator collator = Collator.getInstance(new Locale("vi", "VN"));
+        if (Objects.equals(selected, "1")){
+            collator.setStrength(Collator.SECONDARY); // Không phân biệt chữ hoa, chữ thường,
+            // Sắp xếp List theo thứ tự từ A-Z của key
+            Collections.sort(courseList, new Comparator<Course>() {
+                public int compare(Course o1, Course o2) {
+                    return collator.compare(o1.getName(), o2.getName());
+                }
+            });
+        } else if(Objects.equals(selected, "2")){
+            collator.setStrength(Collator.SECONDARY); // Không phân biệt chữ hoa, chữ thường,
+            // Sắp xếp List theo thứ tự từ Z - A của key
+            Collections.sort(courseList, new Comparator<Course>() {
+                public int compare(Course o1, Course o2) {
+                    return collator.compare(o2.getName(), o1.getName());
+                }
+            });
+        }
+
+        return courseList;
     }
 }

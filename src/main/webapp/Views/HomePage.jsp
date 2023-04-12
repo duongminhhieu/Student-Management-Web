@@ -12,7 +12,7 @@
             <div class="card-body">
                 <h5 class="card-title">Manage the student list</h5>
                 <p class="card-text"> Add, edit, delete, sort by name, sort by grade, find by name.</p>
-                <a href="/list-student" class="btn btn-primary">Go</a>
+                <a href="${pageContext.request.contextPath}/list-student" class="btn btn-primary">Go</a>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
                 <p class="card-text">Add, edit, delete, sort by name, find by name, show the students in course,
                     add/remove a student into the course</p>
                 <div>
-                    <a href="#" class="btn btn-primary">Go</a>
+                    <a href="${pageContext.request.contextPath}/list-course" class="btn btn-primary">Go</a>
                 </div>
             </div>
         </div>
