@@ -37,6 +37,8 @@ public class EditStudentController extends HttpServlet {
 
             request.setAttribute("student", student);
             request.setAttribute("func", "editStudent");
+            request.setAttribute("title", "Edit Student: " + idStudent);
+
 
             RequestDispatcher rd = request.getRequestDispatcher("Views/Layouts/main.jsp");
             rd.forward(request, response);

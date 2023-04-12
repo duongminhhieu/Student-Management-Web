@@ -26,6 +26,9 @@ public class StudentDAO implements IStudentDAO {
 
     private static final String SQL_LIST_ORDER_BY_ID =
             "SELECT id, name, grade, birthday, address, note FROM Student ORDER BY id";
+
+    private  static final String SQL_SEARCH_STUDENT_BY_NAME =
+            "SELECT id, name, grade, birthday, address, note FROM Student WHERE name like ?";
     private static final String SQL_INSERT =
             "INSERT INTO Student (id, name, grade, birthday, address, note) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE =
@@ -179,5 +182,24 @@ public class StudentDAO implements IStudentDAO {
         user.setAddress(resultSet.getString("address"));
         user.setNotes(resultSet.getString("note"));
         return user;
+    }
+
+    @Override
+    public List<Student> searchList(String search) throws DAOException {
+        List<Student> users = new ArrayList<>();
+        try (
+                Connection connection = daoFactory.getConnection();
+                PreparedStatement statement = prepareStatement(connection, SQL_SEARCH_STUDENT_BY_NAME, false, "%" + search + "%");
+
+                ResultSet resultSet = statement.executeQuery();
+        ) {
+            while (resultSet.next()) {
+                users.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return users;
     }
 }

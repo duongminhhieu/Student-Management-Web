@@ -23,7 +23,7 @@ public class CourseDAO implements ICourseDAO {
             "SELECT id, name, lecture, year, note FROM Course WHERE id = ?";
 
     private static final String SQL_LIST_ORDER_BY_ID =
-            "SELECT id, name, lecture, year, note FROM Student ORDER BY id";
+            "SELECT id, name, lecture, year, note FROM Course ORDER BY id";
     private static final String SQL_INSERT =
             "INSERT INTO Course (id, name, lecture, year, note) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE =

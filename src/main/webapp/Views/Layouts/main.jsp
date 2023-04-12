@@ -24,7 +24,7 @@
 
     <div class="container-fluid mt-2">
         <div class="card">
-            <div class="card-header text-bg-primary">Main content</div>
+            <div class="card-header text-bg-primary">${title}</div>
             <div class="card-body overflow-auto">
 
 
@@ -40,6 +40,12 @@
                     </c:when>
                     <c:when test="${func == 'editStudent'}">
                         <%@ include file="../Student/editStudent.jsp" %>
+                    </c:when>
+                    <c:when test="${func == 'listCourse'}">
+                        <%@ include file="../Course/listCourse.jsp" %>
+                    </c:when>
+                    <c:when test="${func == 'addCourse'}">
+                        <%@ include file="../Course/addCourse.jsp" %>
                     </c:when>
                     <c:when test="${func == '404'}">
                         <%@ include file="../404.jsp" %>

@@ -13,6 +13,7 @@ public class HomePageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("func", "home");
+        request.setAttribute("title", "Home page");
         RequestDispatcher rd = request.getRequestDispatcher("Views/Layouts/main.jsp");
         rd.forward(request, response);
     }

@@ -22,6 +22,7 @@ public class AddStudentController extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("func", "addStudent");
+        request.setAttribute("title", "Add Student");
         RequestDispatcher rd = request.getRequestDispatcher("Views/Layouts/main.jsp");
         rd.forward(request, response);
     }
