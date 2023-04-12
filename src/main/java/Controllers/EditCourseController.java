@@ -72,4 +72,5 @@ public class EditCourseController extends HttpServlet {
         System.out.println("Course successfully updated: " + course);
         response.sendRedirect("/list-course");
     }
+
 }
