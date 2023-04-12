@@ -39,7 +39,7 @@
                     <h6 class="card-text mt-4">Number Student: <span class="text-warning">10</span></h6>
                     <h6 class="card-text mt-4 mb-4">Note: <span class="text-warning">${item.getNotes()}</span></h6>
                     <a href="#" class="btn btn-success">View List Student</a>
-                    <a href="/edit-course" class="btn btn-primary">Edit Course</a>
+                    <a href="${pageContext.request.contextPath}/edit-course?idCourse=${item.getId()}" class="btn btn-primary">Edit Course</a>
                     <a href="#" class="btn btn-danger">Delete</a>
 
                 </div>
