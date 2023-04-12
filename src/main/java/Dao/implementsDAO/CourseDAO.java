@@ -22,6 +22,8 @@ public class CourseDAO implements ICourseDAO {
     private static final String SQL_FIND_BY_ID =
             "SELECT id, name, lecture, year, note FROM Course WHERE id = ?";
 
+    private static final String SQL_SEARCH_COURSE_BY_NAME =
+            "SELECT id, name, lecture, year, note FROM Course WHERE name like ?";
     private static final String SQL_LIST_ORDER_BY_ID =
             "SELECT id, name, lecture, year, note FROM Course ORDER BY id";
     private static final String SQL_INSERT =
@@ -171,5 +173,24 @@ public class CourseDAO implements ICourseDAO {
         course.setYear(resultSet.getInt("year"));
         course.setNotes(resultSet.getString("note"));
         return course;
+    }
+
+    @Override
+    public List<Course> searchList(String search) throws DAOException {
+        List<Course> courses = new ArrayList<>();
+        try (
+                Connection connection = daoFactory.getConnection();
+                PreparedStatement statement = prepareStatement(connection, SQL_SEARCH_COURSE_BY_NAME, false, "%" + search + "%");
+
+                ResultSet resultSet = statement.executeQuery();
+        ) {
+            while (resultSet.next()) {
+                courses.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return courses;
     }
 }

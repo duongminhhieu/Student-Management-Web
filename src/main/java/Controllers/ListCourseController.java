@@ -28,7 +28,7 @@ public class ListCourseController extends HttpServlet {
             request.setAttribute("lstCourse", courseDAO.list());
             request.setAttribute("title", "List Course");
         } else {
-           // request.setAttribute("lstSt", courseDAO.searchList(search));
+            request.setAttribute("lstCourse", courseDAO.searchList(search));
             request.setAttribute("title", "Searching for: " + search);
         }
         request.setAttribute("func", "listCourse");

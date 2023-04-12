@@ -20,7 +20,7 @@
     </select>
 
     <form class="d-flex mb-3 ms-3" role="search" action="${pageContext.request.contextPath}/list-student" method="get">
-        <input class="form-control me-2" type="search" name="search" placeholder="Search name ..." aria-label="Search">
+        <input class="form-control me-2" type="search" name="search" placeholder="Search name ..." aria-label="Search" value="<%= request.getParameter("search") != null ? request.getParameter("search") : "" %>">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 </div>
