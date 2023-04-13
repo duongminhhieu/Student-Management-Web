@@ -61,13 +61,6 @@
 
     %>
 
-    <select class="form-select mb-3 ms-2 select-box" style="width: auto" aria-label="Default select example">
-        <option selected>Sort</option>
-        <option value="1">Sort name A - Z</option>
-        <option value="2">Sort name Z - A</option>
-        <option value="3">Sort grade ASC</option>
-        <option value="4">Sort grade DESC</option>
-    </select>
 
     <form class="d-flex mb-3 ms-3" role="search" action="${pageContext.request.contextPath}/list-student" method="get">
         <input class="form-control me-2" type="search" name="search" placeholder="Search name ..." aria-label="Search"

@@ -1,6 +1,7 @@
 package Dao;
 
 import Dao.implementsDAO.CourseDAO;
+import Dao.implementsDAO.EnrollmentDAO;
 import Dao.implementsDAO.StudentDAO;
 
 import javax.naming.InitialContext;
@@ -91,6 +92,10 @@ public abstract class DAOFactory {
     }
     public ICourseDAO getCourseDAO(){
         return new CourseDAO(this);
+    }
+
+    public IEnrollmentDAO getEnrollmentDAO(){
+        return new EnrollmentDAO(this);
     }
 
 }
