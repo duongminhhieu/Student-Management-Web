@@ -7,8 +7,16 @@ public class Course {
     private int year;
     private String notes;
 
+    private int amountStudent;
 
-    // constructor
+    public int getAmountStudent() {
+        return amountStudent;
+    }
+
+    public void setAmountStudent(int amountStudent) {
+        this.amountStudent = amountStudent;
+    }
+// constructor
 
     // Getter and Setter
     public String getId() {

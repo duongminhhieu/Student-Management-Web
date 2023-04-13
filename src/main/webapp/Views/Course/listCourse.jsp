@@ -1,14 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ASUS
-  Date: 12/04/2023
-  Time: 7:53 CH
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="Dao.DAOFactory" %>
+<%@ page import="Dao.ICourseDAO" %>
+<%@ page import="Dao.IEnrollmentDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../Partials/taglib.jsp" %>
 <jsp:useBean id="lstCourse" scope="request" type="java.util.List"/>
-
+<jsp:useBean id="idCourse" class="java.lang.String" scope="page" />
+<jsp:setProperty name="idCourse" property="*" />
 
 <div class="d-flex justify-content-end me-4">
     <a type="button" class="btn btn-success mb-3" href="${pageContext.request.contextPath}/add-course">Add Course</a>
@@ -56,9 +53,9 @@
                     <h6 class="card-text mt-4">Course ID: <span class="text-warning">${item.getId()}</span></h6>
                     <h6 class="card-text mt-4">Lecture: <span class="text-warning">${item.getLecture()}</span></h6>
                     <h6 class="card-text mt-4">Year: <span class="text-warning">${item.getYear()}</span></h6>
-                    <h6 class="card-text mt-4">Number Student: <span class="text-warning">10</span></h6>
+                    <h6 class="card-text mt-4">Number Student: <span class="text-warning">${item.getAmountStudent()}</span></h6>
                     <h6 class="card-text mt-4 mb-4">Note: <span class="text-warning">${item.getNotes()}</span></h6>
-                    <a href="#" class="btn btn-success">View List Student</a>
+                    <a href="${pageContext.request.contextPath}/list-student-of-course?idCourse=${item.getId()}" class="btn btn-success">View List Student</a>
                     <a href="${pageContext.request.contextPath}/edit-course?idCourse=${item.getId()}"
                        class="btn btn-primary">Edit Course</a>
                     <button class="btn btn-danger" data-bs-toggle="modal"

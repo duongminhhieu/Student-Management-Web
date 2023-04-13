@@ -50,6 +50,9 @@
                     <c:when test="${func == 'editCourse'}">
                         <%@ include file="../Course/editCourse.jsp" %>
                     </c:when>
+                    <c:when test="${func == 'listStudentOfCourse'}">
+                        <%@ include file="../Course/listStudentOfCourse.jsp" %>
+                    </c:when>
                     <c:when test="${func == '404'}">
                         <%@ include file="../404.jsp" %>
                     </c:when>
@@ -66,7 +69,7 @@
         <%@ include file="../Partials/footer.jsp" %>
     </div>
 
-
+</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

@@ -13,7 +13,7 @@
     </div>
     <div class="col-md-6">
         <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" name="name" value="${student.getName()}">
+        <input type="text" class="form-control" id="name" name="name" value="${student.getName()}" required>
     </div>
     <div class="col-md-6">
         <label for="inputAddress" class="form-label">Grade</label>
@@ -21,11 +21,11 @@
     </div>
     <div class="col-md-6">
         <label for="birthday" class="form-label">Birthday</label>
-        <input type="date" class="form-control" id="birthday" name="birthday" value="${student.getBirthday()}">
+        <input type="date" class="form-control" id="birthday" name="birthday" value="${student.getBirthday()}" required>
     </div>
     <div class="col-md-6">
         <label for="inputCity" class="form-label">Address</label>
-        <input type="text" class="form-control" id="inputCity" name="address" value="${student.getAddress()}">
+        <input type="text" class="form-control" id="inputCity" name="address" value="${student.getAddress()}" required>
     </div>
     <%--    <div class="col-md-4">--%>
     <%--        <label for="inputState" class="form-label">State</label>--%>
@@ -36,7 +36,7 @@
     <%--    </div>--%>
     <div class="col-md-6">
         <label for="inputZip" class="form-label">Notes</label>
-        <input type="text" class="form-control" id="inputZip" name="note" value="${student.getNotes()}">
+        <input type="text" class="form-control" id="inputZip" name="note" value="${student.getNotes()}" required>
     </div>
     <%--    <div class="col-12">--%>
     <%--        <div class="form-check">--%>

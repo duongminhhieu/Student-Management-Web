@@ -5,6 +5,7 @@ import Dao.DAOFactory;
 import Dao.IStudentDAO;
 import Models.Course;
 import Models.Student;
+import Models.StudentOfCourse;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,6 +36,8 @@ public class StudentDAO implements IStudentDAO {
             "UPDATE Student SET name = ?, grade = ?, birthday = ?, address = ?, note = ? WHERE id = ?";
     private static final String SQL_DELETE =
             "DELETE FROM Student WHERE id = ?";
+    private static final String SQL_CHECK_EXIST =
+            "select COUNT(*) as amount from Student where id = ?";
 
     // Vars ---------------------------------------------------------------------------------------
     private DAOFactory daoFactory;
@@ -81,6 +84,8 @@ public class StudentDAO implements IStudentDAO {
                 user.getNotes(),
         };
 
+        if(checkExistStudent(user.getId()) != 0) return;
+
         try (
                 Connection connection = daoFactory.getConnection();
                 PreparedStatement statement = prepareStatement(connection, SQL_INSERT, true, values);
@@ -90,16 +95,28 @@ public class StudentDAO implements IStudentDAO {
                 throw new DAOException("Creating user failed, no rows affected.");
             }
 
-//            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-//                if (generatedKeys.next()) {
-//                    user.setId(String.valueOf(generatedKeys.getLong(1)));
-//                } else {
-//                    throw new DAOException("Creating user failed, no generated key obtained.");
-//                }
-//            }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+    }
+    private int checkExistStudent(String idStudent){
+        int checkExist = 0;
+        Object[] values = {
+                idStudent,
+        };
+        try (
+                Connection connection = daoFactory.getConnection();
+                PreparedStatement statement = prepareStatement(connection, SQL_CHECK_EXIST, false, values);
+                ResultSet resultSet = statement.executeQuery();
+        ) {
+            while (resultSet.next()) {
+                checkExist = resultSet.getInt("amount");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return checkExist;
     }
 
     @Override
@@ -234,6 +251,45 @@ public class StudentDAO implements IStudentDAO {
             Collections.sort(studentList, new Comparator<Student>() {
                 public int compare(Student o1, Student o2) {
                     return Float.compare(o2.getGrade(), o1.getGrade());
+                }
+            });
+        }
+
+
+        return studentList;
+    }
+
+    @Override
+    public List<StudentOfCourse> sortListStudentOfCourse(List<StudentOfCourse> studentList, String selected) throws DAOException {
+        Collator collator = Collator.getInstance(new Locale("vi", "VN"));
+        if (Objects.equals(selected, "1")){
+            collator.setStrength(Collator.SECONDARY); // Không phân biệt chữ hoa, chữ thường,
+            // Sắp xếp List theo thứ tự từ A-Z của key
+            Collections.sort(studentList, new Comparator<Student>() {
+                public int compare(Student o1, Student o2) {
+                    return collator.compare(o1.getName(), o2.getName());
+                }
+            });
+        } else if(Objects.equals(selected, "2")){
+            collator.setStrength(Collator.SECONDARY); // Không phân biệt chữ hoa, chữ thường,
+            // Sắp xếp List theo thứ tự từ Z - A của key
+            Collections.sort(studentList, new Comparator<Student>() {
+                public int compare(Student o1, Student o2) {
+                    return collator.compare(o2.getName(), o1.getName());
+                }
+            });
+        } else if(Objects.equals(selected, "3")){
+            // Sắp xếp List theo thứ tự từ ASC
+            Collections.sort(studentList, new Comparator<StudentOfCourse>() {
+                public int compare(StudentOfCourse o1, StudentOfCourse o2) {
+                    return Float.compare(o1.getScore(), o2.getScore());
+                }
+            });
+        } else if(Objects.equals(selected, "4")){
+            // Sắp xếp List theo thứ tự từ DESC
+            Collections.sort(studentList, new Comparator<StudentOfCourse>() {
+                public int compare(StudentOfCourse o1, StudentOfCourse o2) {
+                    return Float.compare(o2.getScore(), o1.getScore());
                 }
             });
         }

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 @WebServlet("/add-student")
 public class AddStudentController extends HttpServlet {
@@ -40,7 +41,7 @@ public class AddStudentController extends HttpServlet {
 
         String id = request.getParameter("id");
         String name = request.getParameter("name");
-        float grade = Float.parseFloat(request.getParameter("grade"));
+        float grade = !Objects.equals(request.getParameter("grade"), "") ? Float.parseFloat(request.getParameter("grade")):0;
         String dateString = request.getParameter("birthday");
         String address = request.getParameter("address");
         String notes = request.getParameter("note");

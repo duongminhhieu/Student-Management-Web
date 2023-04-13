@@ -32,6 +32,8 @@ public class CourseDAO implements ICourseDAO {
             "UPDATE Course SET name = ?, lecture = ?, year = ?, note = ? WHERE id = ?";
     private static final String SQL_DELETE =
             "DELETE FROM Course WHERE id = ?";
+    private static final String SQL_CHECK_EXIST =
+            "select COUNT(*) as amount from Course where id = ?";
 
     // Vars ---------------------------------------------------------------------------------------
     private DAOFactory daoFactory;
@@ -74,7 +76,7 @@ public class CourseDAO implements ICourseDAO {
                 course.getYear(),
                 course.getNotes(),
         };
-
+        if(checkExistCourse(course.getId()) != 0) return;
         try (
                 Connection connection = daoFactory.getConnection();
                 PreparedStatement statement = prepareStatement(connection, SQL_INSERT, true, values);
@@ -94,6 +96,27 @@ public class CourseDAO implements ICourseDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+
+    private int checkExistCourse(String idCourse){
+        int checkExist = 0;
+        Object[] values = {
+                idCourse,
+        };
+        try (
+                Connection connection = daoFactory.getConnection();
+                PreparedStatement statement = prepareStatement(connection, SQL_CHECK_EXIST, false, values);
+                ResultSet resultSet = statement.executeQuery();
+        ) {
+            while (resultSet.next()) {
+                checkExist = resultSet.getInt("amount");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return checkExist;
     }
 
     @Override
