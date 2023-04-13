@@ -9,7 +9,7 @@
 
 
 <div class="d-flex justify-content-end me-4">
-    <a type="button" class="btn btn-success mb-3" href="${pageContext.request.contextPath}/add-student">Add Student</a>
+    <a type="button" class="btn btn-success mb-3" href="${pageContext.request.contextPath}/add-student-of-course">Add Student</a>
 
     <%
         String value = request.getParameter("selected");
@@ -20,32 +20,32 @@
                         "        <option>Sort</option>\n" +
                         "        <option selected value=\"1\">Sort name A - Z</option>\n" +
                         "        <option value=\"2\">Sort name Z - A</option>\n" +
-                        "        <option value=\"3\">Sort grade ASC</option>\n" +
-                        "        <option value=\"4\">Sort grade DESC</option>\n" +
+                        "        <option value=\"3\">Sort score ASC</option>\n" +
+                        "        <option value=\"4\">Sort score DESC</option>\n" +
                         "    </select>");
             } else if (value.equals("2")) {
                 out.println("    <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
                         "        <option>Sort</option>\n" +
                         "        <option value=\"1\">Sort name A - Z</option>\n" +
                         "        <option selected value=\"2\">Sort name Z - A</option>\n" +
-                        "        <option value=\"3\">Sort grade ASC</option>\n" +
-                        "        <option value=\"4\">Sort grade DESC</option>\n" +
+                        "        <option value=\"3\">Sort score ASC</option>\n" +
+                        "        <option value=\"4\">Sort score DESC</option>\n" +
                         "    </select>");
             } else if (value.equals("3")) {
                 out.println("    <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
                         "        <option>Sort</option>\n" +
                         "        <option value=\"1\">Sort name A - Z</option>\n" +
                         "        <option value=\"2\">Sort name Z - A</option>\n" +
-                        "        <option selected value=\"3\">Sort grade ASC</option>\n" +
-                        "        <option value=\"4\">Sort grade DESC</option>\n" +
+                        "        <option selected value=\"3\">Sort score ASC</option>\n" +
+                        "        <option value=\"4\">Sort score DESC</option>\n" +
                         "    </select>");
             } else if (value.equals("4")) {
                 out.println("    <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
                         "        <option>Sort</option>\n" +
                         "        <option value=\"1\">Sort name A - Z</option>\n" +
                         "        <option value=\"2\">Sort name Z - A</option>\n" +
-                        "        <option value=\"3\">Sort grade ASC</option>\n" +
-                        "        <option selected value=\"4\">Sort grade DESC</option>\n" +
+                        "        <option value=\"3\">Sort score ASC</option>\n" +
+                        "        <option selected value=\"4\">Sort score DESC</option>\n" +
                         "    </select>");
             }
 
@@ -187,27 +187,28 @@
     var deleteUser = document.getElementById('btn-delete-user');
 
     deleteUser.onclick = function (event) {
+        console.log(1)
         //var formCourse = document.forms['delete-form'];
         //formCourse.action = `/list-student?idDelete=${userID}`;
-        deleteSt(userID);
+        deleteSt(userID, "${lstStudentOfCourse.get(0).getIdCourse()}");
         //formCourse.submit();
     }
 
-    function deleteSt(data) {
+    function deleteSt(idStudent, idCourse) {
         $.ajax({
-            url: '/list-student',
+            url: '/list-student-of-course',
             type: 'DELETE',
             contentType: 'application/json',
-            data: data,
+            data: JSON.stringify({idStudent: idStudent, idCourse: idCourse}),
             success: function (result) {
-                window.location.href = "/list-student";
-
+                window.location.href = "/list-student-of-course?idCourse=" + idCourse;
             },
             error: function (error) {
-                window.location.href = "/list-student";
+                //window.location.href = "/list-student";
             }
         });
     }
+
 
     function stringHanding(str, selected) {
         var result;

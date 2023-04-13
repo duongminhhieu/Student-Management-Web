@@ -69,6 +69,12 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>9.2.1.jre15</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20201115</version>
+        </dependency>
+
 
     </dependencies>
 
