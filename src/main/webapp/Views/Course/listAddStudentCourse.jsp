@@ -3,35 +3,13 @@
 <%@ page import="java.util.Comparator" %>
 <%@ page import="java.text.Collator" %>
 <%@ page import="java.util.Locale" %>
-<%@ page import="Models.Course" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="lstStudentOfCourse" scope="request" type="java.util.List"/>
+<jsp:useBean id="listAddStudentCourse" scope="request" type="java.util.List"/>
 <%@include file="../Partials/taglib.jsp" %>
 
 
-<div>
-    <%
-        DAOFactory javabase = DAOFactory.getInstance("javabase.jdbc");
-        // Obtain UserDAO.
-        ICourseDAO courseDAO = javabase.getCourseDAO();
-
-        Course course = courseDAO.find(request.getParameter("idCourse"));
-
-        out.println("<div class=\"card mb-4\">\n" +
-                "  <h5 class=\"card-header\">Course Details</h5>\n" +
-                "  <div class=\"card-body\">\n" +
-                "    <h5 class=\"card-title\">" + course.getName() + "</h5>\n" +
-                "    <p class=\"card-text\">Lecture: " + course.getLecture() +"</p>\n" +
-                "    <p class=\"card-text\">Year: " + course.getYear() +"</p>\n" +
-                "  </div>\n" +
-                "</div>");
-    %>
-</div>
-
 <div class="d-flex justify-content-end me-4">
-    <a type="button" class="btn btn-success mb-3"
-       href="${pageContext.request.contextPath}/add-student-of-course?idCourse=<%= request.getParameter("idCourse")%>">Add
-        Student</a>
+    <button type="button" class="btn btn-success mb-3 add-student">Add Student</button>
 
     <%
         String value = request.getParameter("selected");
@@ -42,32 +20,32 @@
                         "        <option>Sort</option>\n" +
                         "        <option selected value=\"1\">Sort name A - Z</option>\n" +
                         "        <option value=\"2\">Sort name Z - A</option>\n" +
-                        "        <option value=\"3\">Sort score ASC</option>\n" +
-                        "        <option value=\"4\">Sort score DESC</option>\n" +
+                        "        <option value=\"3\">Sort grade ASC</option>\n" +
+                        "        <option value=\"4\">Sort grade DESC</option>\n" +
                         "    </select>");
             } else if (value.equals("2")) {
                 out.println("    <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
                         "        <option>Sort</option>\n" +
                         "        <option value=\"1\">Sort name A - Z</option>\n" +
                         "        <option selected value=\"2\">Sort name Z - A</option>\n" +
-                        "        <option value=\"3\">Sort score ASC</option>\n" +
-                        "        <option value=\"4\">Sort score DESC</option>\n" +
+                        "        <option value=\"3\">Sort grade ASC</option>\n" +
+                        "        <option value=\"4\">Sort grade DESC</option>\n" +
                         "    </select>");
             } else if (value.equals("3")) {
                 out.println("    <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
                         "        <option>Sort</option>\n" +
                         "        <option value=\"1\">Sort name A - Z</option>\n" +
                         "        <option value=\"2\">Sort name Z - A</option>\n" +
-                        "        <option selected value=\"3\">Sort score ASC</option>\n" +
-                        "        <option value=\"4\">Sort score DESC</option>\n" +
+                        "        <option selected value=\"3\">Sort grade ASC</option>\n" +
+                        "        <option value=\"4\">Sort grade DESC</option>\n" +
                         "    </select>");
             } else if (value.equals("4")) {
                 out.println("    <select class=\"form-select mb-3 ms-2 select-box\" style=\"width: auto\" aria-label=\"Default select example\">\n" +
                         "        <option>Sort</option>\n" +
                         "        <option value=\"1\">Sort name A - Z</option>\n" +
                         "        <option value=\"2\">Sort name Z - A</option>\n" +
-                        "        <option value=\"3\">Sort score ASC</option>\n" +
-                        "        <option selected value=\"4\">Sort score DESC</option>\n" +
+                        "        <option value=\"3\">Sort grade ASC</option>\n" +
+                        "        <option selected value=\"4\">Sort grade DESC</option>\n" +
                         "    </select>");
             }
 
@@ -76,19 +54,19 @@
                     "        <option selected>Sort</option>\n" +
                     "        <option value=\"1\">Sort name A - Z</option>\n" +
                     "        <option value=\"2\">Sort name Z - A</option>\n" +
-                    "        <option value=\"3\">Sort score ASC</option>\n" +
-                    "        <option value=\"4\">Sort score DESC</option>\n" +
+                    "        <option value=\"3\">Sort grade ASC</option>\n" +
+                    "        <option value=\"4\">Sort grade DESC</option>\n" +
                     "    </select>");
         }
 
     %>
 
 
-    <%--  <form class="d-flex mb-3 ms-3" role="search" action="${pageContext.request.contextPath}/list-student-of-course" method="get">--%>
-    <%--    <input class="form-control me-2" type="search" name="search" placeholder="Search name ..." aria-label="Search"--%>
-    <%--           value="<%= request.getParameter("search") != null ? request.getParameter("search") : "" %>">--%>
-    <%--    <button class="btn btn-outline-success" type="submit">Search</button>--%>
-    <%--  </form>--%>
+    <form class="d-flex mb-3 ms-3" role="search" action="${pageContext.request.contextPath}/list-student" method="get">
+        <input class="form-control me-2" type="search" name="search" placeholder="Search name ..." aria-label="Search"
+               value="<%= request.getParameter("search") != null ? request.getParameter("search") : "" %>">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
 </div>
 
 <table class="table align-middle mb-0 bg-white">
@@ -97,17 +75,16 @@
         <th>#</th>
         <th>Student ID</th>
         <th>Name</th>
-        <th>Score</th>
+        <th>Grade</th>
         <th>Birthday</th>
         <th>Address</th>
         <th>Note</th>
-        <th>Enrollment Date</th>
         <th>Action</th>
 
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="item" items="${lstStudentOfCourse}" varStatus="loop">
+    <c:forEach var="item" items="${listAddStudentCourse}" varStatus="loop">
         <tr>
             <td>${loop.index + 1}</td>
             <td>
@@ -117,7 +94,7 @@
                     ${item.getName()}
             </td>
             <td>
-                    ${item.getScore()}
+                    ${item.getGrade()}
             </td>
             <td>
                     ${item.getBirthday()}
@@ -127,17 +104,7 @@
                     ${item.getNotes()}
             </td>
             <td>
-                    ${item.getEnrollmentDate()}
-            </td>
-            <td>
-                <div class="d-flex align-items-center">
-                    <button type="button" class="ms-2 btn btn-danger btn-rounded" data-bs-toggle="modal"
-                            data-id="${item.getId()}"
-                            data-bs-target="#deleteModal">
-                        Delete
-                    </button>
-                </div>
-
+                <input class="form-check-input mt-0" type="checkbox" value="${item.getId()}">
             </td>
         </tr>
     </c:forEach>
@@ -174,26 +141,6 @@
 <form name="delete-form" method="DELETE"></form>
 
 <script>
-    <%--var totalPages = ${model.totalPage};--%>
-    <%--var currentPage = ${model.page};--%>
-    <%--var limit = 2;--%>
-    <%--$(function () {--%>
-    <%--    window.pagObj = $('#pagination').twbsPagination({--%>
-    <%--        totalPages: totalPages,--%>
-    <%--        visiblePages: 10,--%>
-    <%--        startPage: currentPage,--%>
-    <%--        onPageClick: function (event, page) {--%>
-    <%--            if (currentPage != page) {--%>
-    <%--                $('#maxPageItem').val(limit);--%>
-    <%--                $('#page').val(page);--%>
-    <%--                $('#sortName').val('title');--%>
-    <%--                $('#sortBy').val('desc');--%>
-    <%--                $('#type').val('list');--%>
-    <%--                $('#formSubmit').submit();--%>
-    <%--            }--%>
-    <%--        }--%>
-    <%--    });--%>
-    <%--});--%>
 
 
     var userID;
@@ -209,21 +156,49 @@
     var deleteUser = document.getElementById('btn-delete-user');
 
     deleteUser.onclick = function (event) {
-        console.log(1)
         //var formCourse = document.forms['delete-form'];
         //formCourse.action = `/list-student?idDelete=${userID}`;
-        deleteSt(userID, "${lstStudentOfCourse.size() > 0 ? lstStudentOfCourse.get(0).getIdCourse():0}");
+        deleteSt(userID);
         //formCourse.submit();
     }
 
-    function deleteSt(idStudent, idCourse) {
+    function deleteSt(data) {
         $.ajax({
-            url: '/list-student-of-course',
+            url: '/list-student',
             type: 'DELETE',
             contentType: 'application/json',
-            data: JSON.stringify({idStudent: idStudent, idCourse: idCourse}),
+            data: data,
             success: function (result) {
-                window.location.href = "/list-student-of-course?idCourse=" + idCourse;
+                window.location.href = "/list-student";
+
+            },
+            error: function (error) {
+                window.location.href = "/list-student";
+            }
+        });
+    }
+
+    var btn_addStudent = document.querySelector('.add-student');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const data = [];
+    btn_addStudent.addEventListener('click', function (event) {
+        checkboxes.forEach((checkbox) => {
+            if (checkbox.checked === true) {
+                data.push(checkbox.value.trim())
+            }
+        })
+        if (data.length === 0) alert('Xin hãy chọn học sinh')
+        else addStudent(data)
+    });
+
+    function addStudent(data) {
+        $.ajax({
+            url:  "/add-student-of-course?idCourse=<%= request.getParameter("idCourse")%>",
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                window.location.href = "/list-student-of-course?idCourse=<%= request.getParameter("idCourse")%>";
             },
             error: function (error) {
                 //window.location.href = "/list-student";
@@ -231,14 +206,13 @@
         });
     }
 
-
     function stringHanding(str, selected) {
         var result;
 
         if (str.indexOf("?selected") > -1) {
             result = str.split("?")[0];
             result = result + '?selected=' + selected;
-        } else if (str.indexOf("?idCourse") > -1) {
+        } else if (str.indexOf("?search") > -1) {
             if (str.indexOf("&selected") > -1) {
                 result = str.split("&")[0];
                 result = result + '&selected=' + selected;

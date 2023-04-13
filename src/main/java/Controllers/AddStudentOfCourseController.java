@@ -1,8 +1,12 @@
 package Controllers;
 
 import Dao.DAOFactory;
+import Dao.IEnrollmentDAO;
 import Dao.IStudentDAO;
+import Dao.implementsDAO.EnrollmentDAO;
+import Models.Enrollment;
 import Models.Student;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,20 +35,43 @@ public class AddStudentOfCourseController extends HttpServlet {
         List<Student> lstStudent = new ArrayList<Student>();
         if(search == null){
             lstStudent = studentDAO.list();
-            request.setAttribute("title", "List Student");
+            request.setAttribute("title", "Choose Student");
         } else {
             lstStudent = studentDAO.searchList(search);
-            request.setAttribute("title", "Searching for: " + search);
+            request.setAttribute("title", "ChooseStudent - Searching for: " + search);
         }
 
         if(sortSelected != null){
             lstStudent = studentDAO.sortList(lstStudent, sortSelected);
         }
 
-        request.setAttribute("listStudent", lstStudent);
+        request.setAttribute("listAddStudentCourse", lstStudent);
 
-        request.setAttribute("func", "listStudent");
+        request.setAttribute("func", "listAddStudentCourse");
         RequestDispatcher rd = request.getRequestDispatcher("Views/Layouts/main.jsp");
         rd.forward(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String[] myArray = mapper.readValue(request.getReader(), String[].class);
+
+        DAOFactory javabase = DAOFactory.getInstance("javabase.jdbc");
+        IEnrollmentDAO enrollmentDAO = javabase.getEnrollmentDAO();
+
+        for (String s : myArray) {
+            Enrollment enrollment = new Enrollment();
+            enrollment.setCourseID(request.getParameter("idCourse"));
+            enrollment.setStudentID(s);
+            enrollment.setScore(0);
+            enrollment.setEnrollmentDate(new Date());
+            enrollmentDAO.create(enrollment);
+
+        }
+
+
+
+    }
+
 }
