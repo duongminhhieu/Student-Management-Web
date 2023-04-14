@@ -51,6 +51,9 @@ public class EnrollmentDAO implements IEnrollmentDAO {
     private static final String SQL_LIST_STUDENT_OF_COURSE =
             "SELECT idStudent, idCourse, score, enrollment_date FROM Enrollment where idCourse = ?";
 
+    private static final String SQL_LIST_ID_COURSE_OF_STUDENT =
+            "select idCourse from Enrollment where idStudent = ?";
+
     // Vars ---------------------------------------------------------------------------------------
     private DAOFactory daoFactory;
 
@@ -270,6 +273,28 @@ public class EnrollmentDAO implements IEnrollmentDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+
+    @Override
+    public List<String> lstIDCourseOfStudent(String idStudent) throws DAOException {
+        List<String> list = new ArrayList<>();
+        Object[] values = {
+                idStudent
+        };
+        try (
+                Connection connection = daoFactory.getConnection();
+                PreparedStatement statement = prepareStatement(connection, SQL_LIST_ID_COURSE_OF_STUDENT, false, values);
+                ResultSet resultSet = statement.executeQuery();
+        ) {
+            while (resultSet.next()) {
+                list.add(resultSet.getString("idCourse"));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return list;
     }
 
     @Override

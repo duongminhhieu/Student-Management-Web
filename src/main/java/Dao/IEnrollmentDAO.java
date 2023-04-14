@@ -12,7 +12,7 @@ public interface IEnrollmentDAO extends IGenaricDAO<Enrollment> {
     public int countStudentOfCourse(String idCourse) throws  DAOException;
     public void deleteCourse(String idCourse) throws DAOException;
     public void deleteStudent(String idStudent) throws DAOException;
-
+    public List<String> lstIDCourseOfStudent(String idStudent) throws DAOException;
     public void updateScore(String idStudent, String idCourse, float score);
     public List<StudentOfCourse> lstStudentOfCourse(String idCourse) throws DAOException;
 }

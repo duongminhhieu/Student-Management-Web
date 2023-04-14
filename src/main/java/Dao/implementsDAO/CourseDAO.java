@@ -36,6 +36,8 @@ public class CourseDAO implements ICourseDAO {
             "DELETE FROM Course WHERE id = ?";
     private static final String SQL_CHECK_EXIST =
             "select COUNT(*) as amount from Course where id = ?";
+    private static final String SQL_LIST_COURSE_OF_STUDENT =
+            "select COUNT(*) as amount from Course where id = ?";
 
     // Vars ---------------------------------------------------------------------------------------
     private DAOFactory daoFactory;
@@ -242,5 +244,40 @@ public class CourseDAO implements ICourseDAO {
         }
 
         return courseList;
+    }
+
+    @Override
+    public List<Course> listCourseOfStudent(String idStudent) throws DAOException {
+        List<Course> courses = new ArrayList<>();
+
+        IEnrollmentDAO enrollmentDAO = daoFactory.getEnrollmentDAO();
+
+        List<String> list = enrollmentDAO.lstIDCourseOfStudent(idStudent);
+
+        for(String id: list){
+            System.out.println(id);
+            Course course = find(id);
+            courses.add(course);
+        }
+
+        return courses;
+    }
+
+    @Override
+    public List<Course> listCourseOfStudentByYear(String idStudent, int year) throws DAOException {
+        List<Course> courses = new ArrayList<>();
+
+        IEnrollmentDAO enrollmentDAO = daoFactory.getEnrollmentDAO();
+
+        List<String> list = enrollmentDAO.lstIDCourseOfStudent(idStudent);
+
+        for(String id: list){
+            System.out.println(id);
+            Course course = find(id);
+            if(year == course.getYear())
+                courses.add(course);
+        }
+
+        return courses;
     }
 }

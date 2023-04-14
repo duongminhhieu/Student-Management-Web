@@ -29,28 +29,28 @@
         </div>
     </div>
 
-    <div class="col-sm-6 mt-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Show the course list of a student in the year</h5>
-                <p class="card-text"></p>
-                <div>
-                    <a href="#" class="btn btn-primary">Go</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<%--    <div class="col-sm-6 mt-4">--%>
+<%--        <div class="card h-100">--%>
+<%--            <div class="card-body">--%>
+<%--                <h5 class="card-title">Show the course list of a student in the year</h5>--%>
+<%--                <p class="card-text"></p>--%>
+<%--                <div>--%>
+<%--                    <a href="#" class="btn btn-primary">Go</a>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
-    <div class="col-sm-6 mt-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Show the score board of a student in the year.</h5>
-                <p class="card-text"></p>
-                <div>
-                    <a href="#" class="btn btn-primary">Go</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<%--    <div class="col-sm-6 mt-4">--%>
+<%--        <div class="card h-100">--%>
+<%--            <div class="card-body">--%>
+<%--                <h5 class="card-title">Show the score board of a student in the year.</h5>--%>
+<%--                <p class="card-text"></p>--%>
+<%--                <div>--%>
+<%--                    <a href="#" class="btn btn-primary">Go</a>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
 </div>
