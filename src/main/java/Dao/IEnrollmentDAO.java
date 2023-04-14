@@ -1,5 +1,6 @@
 package Dao;
 
+import Models.CourseOfStudent;
 import Models.Enrollment;
 import Models.Student;
 import Models.StudentOfCourse;
@@ -15,4 +16,6 @@ public interface IEnrollmentDAO extends IGenaricDAO<Enrollment> {
     public List<String> lstIDCourseOfStudent(String idStudent) throws DAOException;
     public void updateScore(String idStudent, String idCourse, float score);
     public List<StudentOfCourse> lstStudentOfCourse(String idCourse) throws DAOException;
+    public List<CourseOfStudent> lstCourseOfStudent(String idStudent) throws DAOException;
+
 }

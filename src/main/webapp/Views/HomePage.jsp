@@ -11,7 +11,7 @@
         <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title">Manage the student list</h5>
-                <p class="card-text"> Add, edit, delete, sort by name, sort by grade, find by name.</p>
+                <p class="card-text"> Add, edit, delete, sort by name, sort by grade, find by name. Show the course list, score board of a student in the year. </p>
                 <a href="${pageContext.request.contextPath}/list-student" class="btn btn-primary">Go</a>
             </div>
         </div>

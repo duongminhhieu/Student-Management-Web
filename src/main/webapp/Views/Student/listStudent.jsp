@@ -120,12 +120,20 @@
                             data-bs-target="#deleteModal">
                         Delete
                     </button>
-                    <a href="${pageContext.request.contextPath}/list-course-in-the-year?idStudent=${item.getId()}" type="button"
-                       class="ms-2 btn btn-outline-success btn-rounded">
-                        List Course
-                    </a>
                 </div>
 
+                <div class="d-flex align-items-center mt-2">
+                    <a href="${pageContext.request.contextPath}/list-course-in-the-year?idStudent=${item.getId()}"
+                       type="button"
+                       class="btn btn-outline-success btn-rounded">
+                        List Course
+                    </a>
+                    <a href="${pageContext.request.contextPath}/score-board-in-the-year?idStudent=${item.getId()}"
+                       type="button"
+                       class="ms-2 btn btn-outline-success btn-rounded">
+                        Score board
+                    </a>
+                </div>
             </td>
         </tr>
     </c:forEach>

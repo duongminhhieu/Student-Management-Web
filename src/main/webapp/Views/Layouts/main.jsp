@@ -59,6 +59,9 @@
                     <c:when test="${func == 'listCourseInTheYear'}">
                         <%@ include file="../Student/listCourseInTheYear.jsp" %>
                     </c:when>
+                    <c:when test="${func == 'scoreBoardInTheYear'}">
+                        <%@ include file="../Student/scoreBoardInTheYear.jsp" %>
+                    </c:when>
                     <c:when test="${func == '404'}">
                         <%@ include file="../404.jsp" %>
                     </c:when>

@@ -1,13 +1,7 @@
 package Dao.implementsDAO;
 
-import Dao.DAOException;
-import Dao.DAOFactory;
-import Dao.IEnrollmentDAO;
-import Dao.IStudentDAO;
-import Models.Course;
-import Models.Enrollment;
-import Models.Student;
-import Models.StudentOfCourse;
+import Dao.*;
+import Models.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,6 +45,8 @@ public class EnrollmentDAO implements IEnrollmentDAO {
     private static final String SQL_LIST_STUDENT_OF_COURSE =
             "SELECT idStudent, idCourse, score, enrollment_date FROM Enrollment where idCourse = ?";
 
+    private static final String SQL_LIST_COURSE_OF_STUDENT =
+            "SELECT idStudent, idCourse, score, enrollment_date FROM Enrollment where idStudent = ?";
     private static final String SQL_LIST_ID_COURSE_OF_STUDENT =
             "select idCourse from Enrollment where idStudent = ?";
 
@@ -342,6 +338,30 @@ public class EnrollmentDAO implements IEnrollmentDAO {
         return studentOfCourses;
     }
 
+    @Override
+    public List<CourseOfStudent> lstCourseOfStudent(String idStudent) throws DAOException {
+        List<CourseOfStudent> courseOfStudents = new ArrayList<>();
+        Object[] values = {
+                idStudent,
+        };
+        try (
+                Connection connection = daoFactory.getConnection();
+                PreparedStatement statement = prepareStatement(connection, SQL_LIST_COURSE_OF_STUDENT, false, values);
+                ResultSet resultSet = statement.executeQuery();
+        ) {
+            ICourseDAO courseDAO = daoFactory.getCourseDAO();
+            List<Course> courses = courseDAO.list();
+            while (resultSet.next()) {
+                courseOfStudents.add(mapCourseOfStudent(resultSet, courses));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return courseOfStudents;
+    }
+
+
     private static Enrollment map(ResultSet resultSet) throws SQLException {
         Enrollment enrollment = new Enrollment();
         enrollment.setStudentID(resultSet.getString("idStudent"));
@@ -370,6 +390,27 @@ public class EnrollmentDAO implements IEnrollmentDAO {
         }
 
         return st;
+    }
+
+    private static CourseOfStudent mapCourseOfStudent(ResultSet resultSet, List<Course> lstSt) throws SQLException {
+        CourseOfStudent course = new CourseOfStudent();
+        course.setId(resultSet.getString("idCourse"));
+        course.setIdStudent(resultSet.getString("idStudent"));
+        course.setScore(resultSet.getFloat("score"));
+        course.setEnrollmentDate(resultSet.getDate("enrollment_date"));
+
+        for (Course p : lstSt) {
+            if (p.getId().equals(course.getId())) {
+                course.setName(p.getName());
+                course.setLecture(p.getLecture());
+                course.setAmountStudent(p.getAmountStudent());
+                course.setNotes(p.getNotes());
+                course.setYear(p.getYear());
+                break;
+            }
+        }
+
+        return course;
     }
 
 }
