@@ -7,6 +7,14 @@
 <jsp:useBean id="idCourse" class="java.lang.String" scope="page" />
 <jsp:setProperty name="idCourse" property="*" />
 
+
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">List Course</li>
+    </ol>
+</nav>
+
 <div class="d-flex justify-content-end me-4">
     <a type="button" class="btn btn-success mb-3" href="${pageContext.request.contextPath}/add-course">Add Course</a>
 

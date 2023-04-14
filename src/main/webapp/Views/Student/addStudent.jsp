@@ -6,6 +6,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/list-student">List Student</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add Student</li>
+    </ol>
+</nav>
+
+
 <form class="row g-3" method="post" action="${pageContext.request.contextPath}/add-student">
     <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Student ID</label>

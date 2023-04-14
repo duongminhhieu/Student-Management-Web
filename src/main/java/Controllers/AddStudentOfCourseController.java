@@ -63,7 +63,7 @@ public class AddStudentOfCourseController extends HttpServlet {
         for (String s : myArray) {
             Enrollment enrollment = new Enrollment();
             enrollment.setCourseID(request.getParameter("idCourse"));
-            enrollment.setStudentID(s);
+            enrollment.setStudentID(s.trim());
             enrollment.setScore(0);
             enrollment.setEnrollmentDate(new Date());
             enrollmentDAO.create(enrollment);

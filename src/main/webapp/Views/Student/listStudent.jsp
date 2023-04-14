@@ -7,6 +7,12 @@
 <jsp:useBean id="lstSt" scope="request" type="java.util.List"/>
 <%@include file="../Partials/taglib.jsp" %>
 
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">List Student</li>
+    </ol>
+</nav>
 
 <div class="d-flex justify-content-end me-4">
     <a type="button" class="btn btn-success mb-3" href="${pageContext.request.contextPath}/add-student">Add Student</a>
@@ -114,6 +120,10 @@
                             data-bs-target="#deleteModal">
                         Delete
                     </button>
+                    <a href="${pageContext.request.contextPath}/list-course-in-the-year?idStudent=${item.getId()}" type="button"
+                       class="ms-2 btn btn-outline-success btn-rounded">
+                        List Course
+                    </a>
                 </div>
 
             </td>

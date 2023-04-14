@@ -22,7 +22,6 @@ public class ListCourseController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
         DAOFactory javabase = DAOFactory.getInstance("javabase.jdbc");
         // Obtain UserDAO.
         ICourseDAO courseDAO = javabase.getCourseDAO();

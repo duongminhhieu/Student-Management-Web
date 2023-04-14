@@ -8,6 +8,13 @@
 <jsp:useBean id="lstStudentOfCourse" scope="request" type="java.util.List"/>
 <%@include file="../Partials/taglib.jsp" %>
 
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/list-course">List Course</a></li>
+        <li class="breadcrumb-item active" aria-current="page">View Student Of Course</li>
+    </ol>
+</nav>
 
 <div>
     <%
@@ -21,8 +28,9 @@
                 "  <h5 class=\"card-header\">Course Details</h5>\n" +
                 "  <div class=\"card-body\">\n" +
                 "    <h5 class=\"card-title\">" + course.getName() + "</h5>\n" +
-                "    <p class=\"card-text\">Lecture: " + course.getLecture() +"</p>\n" +
-                "    <p class=\"card-text\">Year: " + course.getYear() +"</p>\n" +
+                "    <p class=\"card-text\">Lecture: " + course.getLecture() + "</p>\n" +
+                "    <p class=\"card-text\">Year: " + course.getYear() + "</p>\n" +
+                "    <p class=\"card-text\">Note: " + course.getNotes() + "</p>\n" +
                 "  </div>\n" +
                 "</div>");
     %>
@@ -136,7 +144,24 @@
                             data-bs-target="#deleteModal">
                         Delete
                     </button>
+
+                    <button type="button" class="btn btn-outline-success ms-4 dropdown-toggle"
+                            data-bs-toggle="dropdown">
+                        Enter Score
+                    </button>
+
+                    <form method="post" action="${pageContext.request.contextPath}/list-student-of-course?idStudent=${item.getId()}&idCourse=<%= request.getParameter("idCourse")%>" class="dropdown-menu p-4"
+                          style="width: 200px;">
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Score</label>
+                            <input type="text" class="form-control" id="categoryName"
+                                   placeholder="Score" value="${item.getScore()}" name="score">
+                        </div>
+                        <button type="submit" class="btn btn-primary">OK</button>
+                    </form>
+
                 </div>
+
 
             </td>
         </tr>
@@ -269,7 +294,8 @@
 
     var selectBox = document.querySelector('.select-box');
     selectBox.addEventListener("change", function (evt) {
-        sortStudent(selectBox.value);
+        if (selectBox.value !== "Sort")
+            sortStudent(selectBox.value);
     });
 
 </script>

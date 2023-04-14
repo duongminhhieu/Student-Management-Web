@@ -31,16 +31,23 @@ public class EnrollmentDAO implements IEnrollmentDAO {
             "SELECT idStudent, idCourse, score, enrollment_date FROM Enrollment";
 
     private static final String SQL_CHECK_EXIST =
-            "select COUNT(*) as amount from Enrollment where idCourse = ? and idStudent = ?";
+            "select COUNT(*) as amount from Enrollment where idStudent = ? and idCourse = ?";
     private static final String SQL_COUNT_STUDENT_OF_COURSE =
         "select count( distinct idStudent) as amount from Enrollment where idCourse = ?";
     private static final String SQL_INSERT =
             "INSERT INTO Enrollment (idStudent, idCourse, score, enrollment_date) VALUES (?, ?, ?, ?)";
     private static final String SQL_UPDATE =
             "UPDATE Enrollment SET score = ?, enrollment_date = ? WHERE idStudent = ? and idCourse = ?";
+
+    private static final String SQL_UPDATE_SCORE =
+            "UPDATE Enrollment SET score = ? WHERE idStudent = ? and idCourse = ?";
     private static final String SQL_DELETE =
             "DELETE FROM Enrollment WHERE idStudent = ? and idCourse = ?";
+    private static final String SQL_DELETE_COURSE =
+            "DELETE FROM Enrollment WHERE idCourse = ?";
 
+    private static final String SQL_DELETE_STUDENT =
+            "DELETE FROM Enrollment WHERE idStudent = ?";
     private static final String SQL_LIST_STUDENT_OF_COURSE =
             "SELECT idStudent, idCourse, score, enrollment_date FROM Enrollment where idCourse = ?";
 
@@ -219,6 +226,72 @@ public class EnrollmentDAO implements IEnrollmentDAO {
         }
 
         return count;
+    }
+
+    @Override
+    public void deleteCourse(String idCourse) throws DAOException {
+        Object[] values = {
+                idCourse
+        };
+
+        try (
+                Connection connection = daoFactory.getConnection();
+                PreparedStatement statement = prepareStatement(connection, SQL_DELETE_COURSE, false, values);
+        ) {
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new DAOException("Deleting user failed, no rows affected.");
+            } else {
+                //user.setId(null);
+                idCourse = null;
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public void deleteStudent(String idStudent) throws DAOException {
+        Object[] values = {
+                idStudent
+        };
+
+        try (
+                Connection connection = daoFactory.getConnection();
+                PreparedStatement statement = prepareStatement(connection, SQL_DELETE_STUDENT, false, values);
+        ) {
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new DAOException("Deleting user failed, no rows affected.");
+            } else {
+                //user.setId(null);
+                idStudent = null;
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public void updateScore(String idStudent, String idCourse, float score) {
+
+        Object[] values = {
+                score,
+                idStudent,
+                idCourse
+        };
+
+        try (
+                Connection connection = daoFactory.getConnection();
+                PreparedStatement statement = prepareStatement(connection, SQL_UPDATE_SCORE, false, values);
+        ) {
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new DAOException("Updating user failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
     }
 
     @Override

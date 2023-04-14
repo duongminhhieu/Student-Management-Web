@@ -46,7 +46,24 @@ public class ViewListStudentOfCourseController extends HttpServlet {
         rd.forward(request, response);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        DAOFactory javabase = DAOFactory.getInstance("javabase.jdbc");
+        // Obtain UserDAO.
+        IEnrollmentDAO iEnrollmentDAO = javabase.getEnrollmentDAO();
+
+        request.setCharacterEncoding("UTF-8");
+        float score = Float.parseFloat(request.getParameter("score"));
+        String idCourse = request.getParameter("idCourse");
+        String idStudent = request.getParameter("idStudent");
+
+        iEnrollmentDAO.updateScore(idStudent,idCourse, score);
+
+        response.sendRedirect("/list-student-of-course?idCourse=" + idCourse);
+    }
+
+    @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BufferedReader reader = request.getReader();
         StringBuilder sb = new StringBuilder();

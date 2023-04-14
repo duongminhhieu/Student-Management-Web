@@ -3,7 +3,9 @@ package Dao.implementsDAO;
 import Dao.DAOException;
 import Dao.DAOFactory;
 import Dao.ICourseDAO;
+import Dao.IEnrollmentDAO;
 import Models.Course;
+import Models.Enrollment;
 import Models.Student;
 
 import java.sql.Connection;
@@ -151,11 +153,12 @@ public class CourseDAO implements ICourseDAO {
         Object[] values = {
                 courseID
         };
-
+        IEnrollmentDAO enrollmentDAO = daoFactory.getEnrollmentDAO();
         try (
                 Connection connection = daoFactory.getConnection();
                 PreparedStatement statement = prepareStatement(connection, SQL_DELETE, false, values);
         ) {
+            enrollmentDAO.deleteCourse(courseID);
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 throw new DAOException("Deleting user failed, no rows affected.");

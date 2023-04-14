@@ -8,6 +8,35 @@
 <%@include file="../Partials/taglib.jsp" %>
 
 
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/list-course">List Course</a></li>
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/list-student-of-course?idCourse=<%= request.getParameter("idCourse")%>">View Student Of Course</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add Student to Course</li>
+    </ol>
+</nav>
+
+<div>
+    <%
+        DAOFactory javabase = DAOFactory.getInstance("javabase.jdbc");
+        // Obtain UserDAO.
+        ICourseDAO courseDAO = javabase.getCourseDAO();
+
+        Course course = courseDAO.find(request.getParameter("idCourse"));
+
+        out.println("<div class=\"card mb-4\">\n" +
+                "  <h5 class=\"card-header\">Add students to the course</h5>\n" +
+                "  <div class=\"card-body\">\n" +
+                "    <h5 class=\"card-title\">" + course.getName() + "</h5>\n" +
+                "    <p class=\"card-text\">Lecture: " + course.getLecture() +"</p>\n" +
+                "    <p class=\"card-text\">Year: " + course.getYear() +"</p>\n" +
+                "    <p class=\"card-text\">Note: " + course.getNotes() +"</p>\n" +
+                "  </div>\n" +
+                "</div>");
+    %>
+</div>
+
 <div class="d-flex justify-content-end me-4">
     <button type="button" class="btn btn-success mb-3 add-student">Add Student</button>
 
@@ -62,11 +91,11 @@
     %>
 
 
-    <form class="d-flex mb-3 ms-3" role="search" action="${pageContext.request.contextPath}/list-student" method="get">
-        <input class="form-control me-2" type="search" name="search" placeholder="Search name ..." aria-label="Search"
-               value="<%= request.getParameter("search") != null ? request.getParameter("search") : "" %>">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
+<%--    <form class="d-flex mb-3 ms-3" role="search" action="${pageContext.request.contextPath}/list-student" method="get">--%>
+<%--        <input class="form-control me-2" type="search" name="search" placeholder="Search name ..." aria-label="Search"--%>
+<%--               value="<%= request.getParameter("search") != null ? request.getParameter("search") : "" %>">--%>
+<%--        <button class="btn btn-outline-success" type="submit">Search</button>--%>
+<%--    </form>--%>
 </div>
 
 <table class="table align-middle mb-0 bg-white">
@@ -212,7 +241,7 @@
         if (str.indexOf("?selected") > -1) {
             result = str.split("?")[0];
             result = result + '?selected=' + selected;
-        } else if (str.indexOf("?search") > -1) {
+        } else if (str.indexOf("?idCourse") > -1) {
             if (str.indexOf("&selected") > -1) {
                 result = str.split("&")[0];
                 result = result + '&selected=' + selected;
@@ -243,7 +272,8 @@
 
     var selectBox = document.querySelector('.select-box');
     selectBox.addEventListener("change", function (evt) {
-        sortStudent(selectBox.value);
+        if(selectBox.value !== "Sort")
+            sortStudent(selectBox.value);
     });
 
 </script>
