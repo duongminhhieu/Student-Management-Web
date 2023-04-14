@@ -5,6 +5,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Dao.implementsDAO.CourseDAO" %>
+<%@ page import="Models.CourseOfStudent" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../Partials/taglib.jsp" %>
 <jsp:useBean id="scoreBoardInTheYear" scope="request" type="java.util.List"/>
@@ -42,6 +43,21 @@
 </div>
 
 <div class="d-flex justify-content-end me-4">
+
+    <h5 class="me-3 mt-2">Grade: <span class="text-danger gradeText"><%
+        float tb = 0;
+        IEnrollmentDAO iEnrollmentDAO = javabase.getEnrollmentDAO();
+        List<CourseOfStudent> ll = iEnrollmentDAO.lstCourseOfStudent(request.getParameter("idStudent"));
+        for(CourseOfStudent c: ll){
+            tb += c.getScore();
+        }
+        if(ll.size() == 0){
+            out.println(0);
+        }else
+            out.println((float) tb/ll.size());
+    %></span></h5>
+
+<%--    <button class="btn btn-success mb-3 update-grade">Update Grade Database</button>--%>
 
     <%
         // lay list Year
@@ -154,5 +170,23 @@
         }
     });
 
+    var updateGrade = document.querySelector('.update-grade');
+    updateGrade.addEventListener('click' , function(evt) {
+
+        var gradeT = document.querySelector('.gradeText');
+
+        $.ajax({
+            url: '/score-board-in-the-year',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: gradeT,
+            success: function (result) {
+                window.location.href
+            },
+            error: function (error) {
+
+            }
+        });
+    })
 </script>
 

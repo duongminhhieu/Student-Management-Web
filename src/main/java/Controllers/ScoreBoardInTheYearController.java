@@ -3,6 +3,7 @@ package Controllers;
 import Dao.DAOFactory;
 import Dao.ICourseDAO;
 import Dao.IEnrollmentDAO;
+import Dao.IStudentDAO;
 import Models.Course;
 import Models.CourseOfStudent;
 import jakarta.servlet.RequestDispatcher;
@@ -64,6 +65,7 @@ public class ScoreBoardInTheYearController extends HttpServlet {
         response.setContentType("text/plain");
         response.getWriter().write(data);
     }
+
 
     public void getAmountStudent(List<CourseOfStudent> lstCourse, IEnrollmentDAO iEnrollmentDAO){
         System.out.println(lstCourse.size());
